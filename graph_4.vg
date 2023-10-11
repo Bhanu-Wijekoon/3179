@@ -1,0 +1,50 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 300, "height": 200,
+    "data": {"url": "smoking.csv"},
+    "mark": "area",
+    "params":[
+        {
+            "name": "Country_Below",
+            "value": 1000000000,
+            "bind": {
+                "input": "range",
+                "min": 0,
+                "max": 1000000000,
+                "step": 1000000,
+                "name": "Minimum Percentage of smokers: "
+            }
+        }
+            
+    ],
+    "transform": [
+                    {"filter": "datum.Smokers < Country_Below"},
+                    {"filter": {"field": "Gender", "equal": "Total"}}
+                    ,
+                    {"filter": {"field": "Country", "oneOf": [
+                                                                "Australia", 
+                                                                "India",
+                                                                "China",
+                                                                "United States of America",
+                                                                "Canada",
+                                                                "New Zealand"
+                                                            ]}}
+                ],
+    "encoding": {
+      "x": {
+        "timeUnit": "yearmonth", "field": "Year",
+        "axis": {"format": "%Y"}
+      },
+      "y": {
+        "aggregate": "sum", "field": "Smokers"
+      },
+      "color": {
+        "field": "Country",
+        "scale": {"scheme": "category20b"}
+      },
+      "tooltip": [
+        {"field": "Country", "type": "nominal"},
+        {"field": "Smokers", "type": "quantitative", "format": ","}
+    ]
+    }
+  }
