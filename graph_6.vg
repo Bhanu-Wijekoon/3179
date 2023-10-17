@@ -1,0 +1,63 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "A bar chart that directly encodes color names in the data.",
+    "data": {"url": "smoking.csv"},
+    "width": 500, "height": 200,
+    "params":[
+        {
+            "name": "Year_Scale",
+            "value": 2012,
+            "bind": {
+                "input": "range",
+                "min": 1980,
+                "max": 2012,
+                "step": 1,
+                "name": "Year: "
+            }
+        },
+        {
+          "name": "country_highlight",
+          "select": {"type": "point", "fields": ["Country"]},
+          "bind": "legend"
+        }      
+    ],
+    "transform": [
+        {"filter": {"field": "Gender", "equal": "Total"}},
+        {"filter": {"field": "Country", "oneOf": ["United States", "Australia", "China", "India",
+                                  "Vietnam", "Uruguay", "Sweden", "Nigeria", "France", "Libya", 
+                                  "Argentina", "Chile", "Egypt", "Niger", "Peru",
+                                  "Botswana", "Gambia", "Ukraine", "Croatia", "Serbia"]}},
+        {"filter": "datum.Year == Year_Scale"}
+    ],
+
+    "mark": "bar",
+    "encoding": {
+      "x": {
+        "field": "Country",
+        "type": "nominal"
+      },
+      "y": {
+        "aggregate": "sum",
+        "field": "Percentage_of_Total",
+        "title": "Percentage of total",
+        "type": "quantitative",
+        "scale": {"domain": [0, 40], "nice": 6}
+      },
+      "color": {
+        "field": "Country",
+        "scale": {"scheme": "tableau20"},
+        "type": "nominal"
+      },
+      "opacity": {
+        "condition": {"param": "country_highlight", "value": 1},
+        "value": 0.2
+      },
+        
+      "tooltip": [
+        {"field": "Country", "type": "nominal"}, 
+        {"field": "Percentage_of_Total", "title": "Percentage of total", "type": "quantitative", "format": ","},
+        {"field": "Year", "type": "quantitative"}
+    ]
+    }
+  }
+  
