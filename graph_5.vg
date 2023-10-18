@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A population pyramid for the US in 2000.",
+  "data": { "url": "smoking.csv"},
+  "transform": [
+    {"filter": "datum.Year == 2012"},
+    {"filter": {"field": "Country", "oneOf": ["World", "United States", "Australia", "China", "India",
+                                  "Vietnam", "Uruguay", "Sweden", "Nigeria", "France", "Libya", 
+                                  "Argentina", "Chile", "Egypt", "Niger", "Peru",
+                                  "Botswana", "Gambia", "Ukraine", "Croatia", "Serbia"]}}
+  ],
+  "spacing": 0,
+  "hconcat": [{
+    "transform": [{
+      "filter": {"field": "Gender", "equal": "Female"}
+    }],
+    "title": "Female",
+    "mark": "bar",
+    "encoding": {
+      "y": {
+        "field": "Country", "axis": null, "sort": "descending"
+      },
+      "x": {
+        "aggregate": "sum", "field": "Percentage_of_Female",
+        "title": "Percentage",
+        "axis": {
+          "format": "s",
+          "maxExtent": 40
+        },
+        "scale": {"domain": [0, 60], "nice": 6},
+        "sort": "descending"
+      },
+      "color": {
+        "field": "Gender",
+        "scale": {"range": ["#e8177d", "#30afcf"]},
+        "legend": null
+      }
+    }
+  }, {
+    "width": 20,
+    "view": {"stroke": null},
+    "mark": {
+      "type": "text",
+      "align": "center"
+    },
+    "encoding": {
+      "y": {"field": "Country", "type": "nominal", "axis": null, "sort": "descending"},
+      "text": {"field": "Country", "type": "nominal"}
+    }
+  }, {
+    "transform": [{
+      "filter": {"field": "Gender", "equal": "Male"}
+    }],
+    "title": "Male",
+    "mark": "bar",
+    "encoding": {
+      "y": {
+        "field": "Country", "title": null,
+        "axis": null, "sort": "descending"
+      },
+      "x": {
+        "aggregate": "sum", "field": "Percentage_of_Males",
+        "title": "Percentage",
+        "axis": {"format": "s"},
+        "scale": {"domain": [0, 60], "nice": 6}
+      },
+      "color": {
+        "field": "Gender",
+        "legend": null
+      }
+    }
+  }],
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"grid": false}  
+  }
+}
