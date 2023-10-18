@@ -1,7 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "A scatterplot showing body mass and flipper lengths of penguins.",
-  
+  "config": {
+    "title": {"font": "Roboto Slab"},
+    "axis": {"labelFont": "Roboto Slab"}
+  },
   "data": {
     "url": "smoking.csv"
   },
@@ -16,12 +19,7 @@
             "step": 1,
             "name": "Year: "
         }
-    },
-      {
-        "name": "country_highlight",
-        "select": {"type": "point", "fields": ["Country"]},
-        "bind": "legend"
-      } 
+    }
   ],
   "transform": [
     {"filter": "datum.Year == Year_Scale"},
@@ -42,7 +40,8 @@
                                   "Argentina", "Chile", "Egypt", "Niger", "Peru",
                                   "Botswana", "Gambia", "Ukraine", "Croatia", "Serbia"]}}
   ],
-  "width": 500, "height": 200,
+  "width": 500, "height": 300,
+  "layer": [ {
   "mark": "point",
   "encoding": {
     "x": {
@@ -57,11 +56,7 @@
       "type": "quantitative",
       "scale": {"zero": false, "domain": [0, 55], "nice": 6}
     },
-    "color": {"field": "Country", "scale": {"scheme": "tableau20"}, "type": "nominal"},
-    "opacity": {
-      "condition": {"param": "country_highlight", "value": 1},
-      "value": 0.2
-    },  
+    "color": {"field": "Country", "scale": {"scheme": "tableau20"}, "type": "nominal"},  
     "shape": {"field": "Country", "type": "nominal"},
     "tooltip": [
       {"field": "Country", "type": "nominal"}, 
@@ -69,7 +64,22 @@
       {"field": "GDP_Per_Capita", "title": "GDP per capita", "type": "quantitative", "format": ","},
       {"field": "Year", "type": "quantitative"}
   ]
-  }
+    }
+  }, 
+  {
+    "mark": { "type": "rule", "color": "red", "strokeWidth": 2 },
+      "encoding": {
+        "x": {
+          "aggregate": "mean",
+          "field": "GDP_Per_Capita",
+          "title": "",
+          "type": "quantitative",
+          "axis": { "labelAngle": 0 } 
+        }
+
+      }
+
+  }]
 }
 
 
