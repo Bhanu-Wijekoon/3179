@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map with Shaded Relief</title>
+  <style>
+    #map-container {
+      position: relative;
+      width: 800px;
+      height: 400px;
+    }
+    #relief-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-image: url('https://shadedrelief.com/natural3/ne3_data/8192/textures/3_no_ice_clouds_8k.jpg'); /* Your relief image */
+      background-size: cover;
+    }
+    #vega-map {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div id="map-container">
+    <div id="relief-background"></div>
+    <div id="vega-map"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
+
+  <script>
+    var vegaSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": "Anime Popularity by Country (2024)",
+      "width": 800,
+      "height": 400,
+      "background": "#a4c8e0",  // Light blue ocean background color
+      "projection": {"type": "equalEarth"},
+      "layer": [
+        {
+          // Graticules Layer
+          "mark": {"type": "geoshape", "stroke": "#888", "strokeWidth": 0.5},  // Grey graticules
+          "data": {"graticule": true}
+        },
+        {
+          // Layer 1: Countries with valid AnimePopularityInterest2024 data
+          "mark": {"type": "geoshape"},
+          "data": {
+            "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/ne_110m.topojson",
+            "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+          },
+          "transform": [
+            {
+              // Normalize country names to match between TopoJSON and CSV
+              "calculate": "datum.properties.NAME == 'United States of America' ? 'United States' : datum.properties.NAME",
+              "as": "country_normalized"
+            },
+            {
+              "lookup": "country_normalized",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/anime-popularity-by-country-2024.csv"
+                },
+                "key": "country",
+                "fields": ["AnimePopularityInterest2024", "AnimePopularityInterest2023"]
+              }
+            },
+            {
+              "calculate": "toNumber(datum.AnimePopularityInterest2024)", 
+              "as": "AnimePopularityInterest2024_numeric"
+            },
+            {
+              "calculate": "toNumber(datum.AnimePopularityInterest2023)", 
+              "as": "AnimePopularityInterest2023_numeric"
+            },
+            {
+              "filter": "isFinite(datum.AnimePopularityInterest2024_numeric) && datum.AnimePopularityInterest2024_numeric != null"
+            }
+          ],
+          "encoding": {
+            "color": {
+              "field": "AnimePopularityInterest2024_numeric",
+              "type": "quantitative",
+              "scale": {
+                "type": "linear",
+                "domain": [0, 100],  // Adjust this to the actual range of your data
+                "range": [
+                  "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014",
+                  "#cc4c02", "#993404", "#8c2d04", "#662506", "#4d1901"
+                ]
+              },
+              "legend": {
+                "title": "Anime Popularity 2024",  // Title for the legend
+                "orient": "bottom",                // Position of the legend
+                "titleFontSize": 12,              // Font size for the legend title
+                "labelFontSize": 10               // Font size for the legend labels
+              }
+            },
+            "tooltip": [
+              {"field": "country_normalized", "type": "nominal", "title": "Country"},
+              {"field": "AnimePopularityInterest2024_numeric", "type": "quantitative", "title": "Popularity 2024"},
+              {"field": "AnimePopularityInterest2023_numeric", "type": "quantitative", "title": "Popularity 2023"}
+            ]
+          }
+        },
+        {
+          // Layer 2: Countries with missing AnimePopularityInterest2024 data
+          "mark": {"type": "geoshape", "color": "#d3d3d3"},
+          "data": {
+            "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/ne_110m.topojson",
+            "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+          },
+          "transform": [
+            {
+              // Normalize country names to match between TopoJSON and CSV
+              "calculate": "datum.properties.NAME == 'United States of America' ? 'United States' : datum.properties.NAME",
+              "as": "country_normalized"
+            },
+            {
+              "lookup": "country_normalized",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/anime-popularity-by-country-2024.csv"
+                },
+                "key": "country",
+                "fields": ["AnimePopularityInterest2024"]
+              }
+            },
+            {
+              "calculate": "toNumber(datum.AnimePopularityInterest2024)", 
+              "as": "AnimePopularityInterest2024_numeric"
+            },
+            {
+              "filter": "!isFinite(datum.AnimePopularityInterest2024_numeric) || datum.AnimePopularityInterest2024_numeric == null"
+            }
+          ]
+        }
+      ]
+    }
+
+
+    vegaEmbed('#vega-map', vegaSpec);
+  </script>
+</body>
+</html>
