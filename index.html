@@ -15,7 +15,7 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      background-image: url('https://shadedrelief.com/natural3/ne3_data/8192/textures/3_no_ice_clouds_8k.jpg'); /* Your relief image */
+      background-image: url('https://shadedrelief.com/natural3/ne3_data/8192/textures/3_no_ice_clouds_8k.jpg');
       background-size: cover;
     }
     #vega-map {
@@ -42,16 +42,15 @@
       "title": "Anime Popularity by Country (2024)",
       "width": 800,
       "height": 400,
-      "background": "#a4c8e0",  // Light blue ocean background color
+      "background": "#a4c8e0",  
       "projection": {"type": "equalEarth"},
       "layer": [
         {
           // Graticules Layer
-          "mark": {"type": "geoshape", "stroke": "#888", "strokeWidth": 0.5},  // Grey graticules
+          "mark": {"type": "geoshape", "stroke": "#888", "strokeWidth": 0.5},  
           "data": {"graticule": true}
         },
         {
-          // Layer 1: Countries with valid AnimePopularityInterest2024 data
           "mark": {"type": "geoshape"},
           "data": {
             "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/ne_110m.topojson",
@@ -59,7 +58,6 @@
           },
           "transform": [
             {
-              // Normalize country names to match between TopoJSON and CSV
               "calculate": "datum.properties.NAME == 'United States of America' ? 'United States' : datum.properties.NAME",
               "as": "country_normalized"
             },
@@ -91,17 +89,17 @@
               "type": "quantitative",
               "scale": {
                 "type": "linear",
-                "domain": [0, 100],  // Adjust this to the actual range of your data
+                "domain": [0, 100],  
                 "range": [
                   "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014",
                   "#cc4c02", "#993404", "#8c2d04", "#662506", "#4d1901"
                 ]
               },
               "legend": {
-                "title": "Anime Popularity 2024",  // Title for the legend
-                "orient": "bottom",                // Position of the legend
-                "titleFontSize": 12,              // Font size for the legend title
-                "labelFontSize": 10               // Font size for the legend labels
+                "title": "Anime Popularity 2024",  
+                "orient": "bottom",                
+                "titleFontSize": 12,              
+                "labelFontSize": 10             
               }
             },
             "tooltip": [
@@ -112,7 +110,6 @@
           }
         },
         {
-          // Layer 2: Countries with missing AnimePopularityInterest2024 data
           "mark": {"type": "geoshape", "color": "#d3d3d3"},
           "data": {
             "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/ne_110m.topojson",
@@ -120,7 +117,6 @@
           },
           "transform": [
             {
-              // Normalize country names to match between TopoJSON and CSV
               "calculate": "datum.properties.NAME == 'United States of America' ? 'United States' : datum.properties.NAME",
               "as": "country_normalized"
             },
