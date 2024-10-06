@@ -3,26 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Map with Shaded Relief</title>
+  <title>Map with Shaded Relief and Anime Graph</title>
   <style>
     #map-container {
       position: relative;
       width: 800px;
       height: 400px;
     }
-    #relief-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      background-image: url('https://shadedrelief.com/natural3/ne3_data/8192/textures/3_no_ice_clouds_8k.jpg');
-      background-size: cover;
-    }
     #vega-map {
-      position: absolute;
+      position: relative;
       width: 100%;
       height: 100%;
       z-index: 2;
+    }
+    #anime-graph-container {
+      width: 800px;
+      height: 600px;
+      margin-top: 400px; 
+    }
+    #vega-anime-graph {
+      margin-top: 400px; 
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
@@ -31,12 +33,23 @@
     <div id="relief-background"></div>
     <div id="vega-map"></div>
   </div>
+  <div>
+
+  </div>
+  <div>
+    
+  </div>
+
+  <div id="anime-graph-container">
+    <div id="vega-anime-graph"></div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
 
   <script>
+
     var vegaSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": "Anime Popularity by Country (2024)",
@@ -140,10 +153,133 @@
           ]
         }
       ]
-    }
-
+    };
 
     vegaEmbed('#vega-map', vegaSpec);
+
+    
+    var vegaSpecAnime = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 800,
+      "height": 600,
+      "title": "Anime Score vs Popularity",
+      "data": {
+        "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/anime.csv",
+        "format": {
+          "type": "csv"
+        }
+      },
+      "params": [
+        {
+          "name": "Members_Above",
+          "value": 0,
+          "bind": {
+            "input": "range",
+            "min": 0,
+            "max": 3000000,
+            "step": 50000,
+            "name": "Minimum Members: "
+          }
+        },
+        {
+          "name": "Type_selection",
+          "bind": {
+            "input": "select",
+            "options": [null, "TV", "Movie", "OVA", "Special", "ONA", "Music"],
+            "labels": ["Show All", "TV", "Movie", "OVA", "Special", "ONA", "Music"],
+            "name": "Type Selection: "
+          }
+        }
+      ],
+      "transform": [
+        {"filter": "datum.Score > 0"},
+        {"filter": "datum.Popularity > 0"},
+        {"filter": "datum.Members > Members_Above"},
+        {
+          "filter": "Type_selection == null || datum.Type == Type_selection"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "Score",
+          "type": "quantitative",
+          "title": "Score",
+          "axis": {"tickCount": 7},
+          "scale": {"type": "linear"}
+        },
+        "y": {
+          "field": "Popularity",
+          "type": "quantitative",
+          "title": "Popularity (Rank)",
+          "axis": {"tickCount": 6},
+          "scale": {"type": "linear", "reverse": true}
+        }
+      },
+      "layer": [
+        {
+          "mark": "circle",
+          "encoding": {
+            "size": {
+              "field": "Members",
+              "type": "quantitative",
+              "scale": {
+                "type": "threshold",
+                "domain": [50000, 100000, 500000, 1000000, 2000000],
+                "range": [10, 50, 100, 200, 300, 400]
+              },
+              "legend": {"format": ".1s", "title": "Members"}
+            },
+            "color": {
+              "field": "Rating",
+              "type": "nominal",
+              "scale": {
+                "scheme": "category10"
+              }
+            },
+            "opacity": {"value": 0.6},
+            "tooltip": [
+              {"field": "Name", "type": "nominal"},
+              {"field": "Score", "type": "quantitative"},
+              {"field": "Popularity", "type": "quantitative", "format": ","},
+              {"field": "Members", "type": "quantitative", "format": ","},
+              {"field": "Rating", "type": "nominal"},
+              {"field": "Type", "type": "nominal"}
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 7,
+            "fontSize": 11.5,
+            "fontStyle": "italic"
+          },
+          "encoding": {
+            "text": {"field": "Name", "type": "nominal"},
+            "color": {"value": "black"},
+            "opacity": {
+              "condition": {
+                "test": "datum['Popularity'] <= 10",
+                "value": 1
+              },
+              "value": 0
+            },
+            "tooltip": [
+              {"field": "Name", "type": "nominal"},
+              {"field": "Score", "type": "quantitative"},
+              {"field": "Popularity", "type": "quantitative", "format": ","},
+              {"field": "Members", "type": "quantitative", "format": ","},
+              {"field": "Rating", "type": "nominal"},
+              {"field": "Type", "type": "nominal"}
+            ]
+          }
+        }
+      ]
+    };
+
+    vegaEmbed('#vega-anime-graph', vegaSpecAnime);
   </script>
 </body>
 </html>
