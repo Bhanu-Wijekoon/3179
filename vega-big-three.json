@@ -1,0 +1,82 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Plot of Total Minutes per Chapter over Chapters for One Piece, Naruto, and Bleach.",
+    "width": 800,
+    "height": 400,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/BigThree.csv",
+      "format": {"type": "csv"}
+    },
+    "transform": [
+      {
+        "calculate": "toNumber(datum['Start onChapter'])",
+        "as": "StartChapter"
+      },
+      {
+        "calculate": "toNumber(datum['TotalChapters'])",
+        "as": "TotalChaptersNum"
+      },
+      {
+        "calculate": "toNumber(datum['TotalMinutes(avg 24)'])",
+        "as": "TotalMinutes"
+      },
+      {
+        "calculate": "datum.StartChapter + datum.TotalChaptersNum - 1",
+        "as": "EndChapter"
+      },
+      {
+        "calculate": "datum.TotalMinutes / datum.TotalChaptersNum",
+        "as": "TotalMinutesPerChapter"
+      },
+      {
+        "calculate": "[datum.StartChapter, datum.EndChapter]",
+        "as": "ChapterArray"
+      },
+      {
+        "flatten": ["ChapterArray"],
+        "as": ["Chapter"]
+      },
+      {
+        "calculate": "toNumber(datum.Chapter)",
+        "as": "ChapterNum"
+      },
+      {
+        "filter": "isValid(datum.ChapterNum) && isFinite(datum.TotalMinutesPerChapter) && datum['Arc'] != 'Special' && datum['Arc'] != 'Itachi Shinden Book: Light and Darkness Arc' && datum['Arc'] != 'Childhood Arc' && datum['Arc'] != 'Sasuke Shinden: Book of Sunrise Arc' && datum['Arc'] != 'Shikamaru Hiden: A Cloud Drifting in Silent Darkness Arc' && datum['Arc'] != 'Konoha Hiden: The Perfect Day for a Wedding Arc' && datum['Arc'] != 'The Seventh Hokage and the Scarlet Spring Arc'"
+      },
+      {
+        "filter": "isValid(datum.ChapterNum) && isFinite(datum.TotalMinutesPerChapter)"
+      },
+      {
+        "sort": [{"field": "ChapterNum"}, {"field": "BigThree"}]
+      }
+    ],
+    "mark": "line",
+    "encoding": {
+      "x": {
+        "field": "ChapterNum",
+        "type": "quantitative",
+        "title": "Chapter Number"
+      },
+      "y": {
+        "field": "TotalMinutesPerChapter",
+        "type": "quantitative",
+        "title": "Total Minutes per Chapter"
+      },
+      "color": {
+        "field": "BigThree",
+        "type": "nominal",
+        "title": "Series"
+      },
+      "tooltip": [
+        {"field": "Arc", "type": "nominal", "title": "Arc"},
+        {"field": "BigThree", "type": "nominal", "title": "Series"},
+        {
+          "field": "TotalMinutesPerChapter",
+          "type": "quantitative",
+          "title": "Minutes per Chapter",
+          "format": ".2f"
+        }
+      ]
+    }
+  }
+  

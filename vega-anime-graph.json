@@ -1,0 +1,158 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 800,
+    "height": 600,
+    "title": "Genre's by Popularity",
+    "data": {
+      "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/anime.csv",
+      "format": {
+        "type": "csv"
+      }
+    },
+    "params": [
+      {
+        "name": "GenreRankMax",
+        "value": 10,
+        "bind": {
+          "input": "range",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "name": "   No. of Genres: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "calculate": "split(datum.Genres, ', ')[0]",
+        "as": "Primary_Genre"
+      },
+      {"filter": "datum.Score > 0"},
+      {"filter": "datum.Popularity > 0"}
+    ],
+    "layer": [
+      {
+        "transform": [
+          {
+            "aggregate": [
+              {"op": "mean", "field": "Score", "as": "avg_Score"},
+              {"op": "mean", "field": "Popularity", "as": "avg_Popularity"},
+              {"op": "sum", "field": "Members", "as": "total_Members"},
+              {"op": "count", "as": "anime_count"}
+            ],
+            "groupby": ["Primary_Genre"]
+          },
+          {
+            "window": [
+              {"op": "rank", "as": "rank_by_members"}
+            ],
+            "sort": [{"field": "total_Members", "order": "descending"}]
+          },
+          {
+            "calculate": "datum.rank_by_members == 1",
+            "as": "IsMaxTotalMembers"
+          },
+          {
+            "window": [
+              {"op": "rank", "as": "genre_rank"}
+            ],
+            "sort": [{"field": "anime_count", "order": "descending"}]
+          },
+          {
+            "filter": "datum.genre_rank <= GenreRankMax"
+          }
+        ],
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "field": "avg_Score",
+            "type": "quantitative",
+            "title": "User Score Average for Genre",
+            "scale": { "domain": [0, 8]}
+          },
+          "y": {
+            "field": "avg_Popularity",
+            "type": "quantitative",
+            "title": "Popularity (Rank) Average for Genre",
+            "scale": { "domain": [0, 12000]}
+          },
+          "size": {
+            "field": "anime_count",
+            "type": "quantitative",
+            "title": "Number of Anime in Genre",
+            "scale": {
+              "type": "linear",
+              "base": 10,
+              "range": [100, 1000]
+            },
+            "legend": {
+              "format": "d"
+            }
+          },
+          "color": {
+            "field": "Primary_Genre",
+            "type": "nominal",
+            "legend": {"title": "Genre"},
+            "scale": {"scheme": "category20"}
+          },
+          "tooltip": [
+            {"field": "Primary_Genre", "type": "nominal", "title": "Genre"},
+            {"field": "avg_Score", "type": "quantitative", "title": "Average Score", "format": ".2f"},
+            {"field": "avg_Popularity", "type": "quantitative", "title": "Average Popularity", "format": ".0f"},
+            {"field": "anime_count", "type": "quantitative", "title": "No. of Anime"}
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "aggregate": [
+              {"op": "mean", "field": "Score", "as": "overall_avg_Score"},
+              {"op": "mean", "field": "Popularity", "as": "overall_avg_Popularity"}
+            ]
+          }
+        ],
+        "mark": {
+          "type": "point",
+          "color": "black",
+          "shape": "cross",
+          "size": 200
+        },
+        "encoding": {
+          "x": {"field": "overall_avg_Score", "type": "quantitative"},
+          "y": {"field": "overall_avg_Popularity", "type": "quantitative"},
+          "tooltip": [
+            {"field": "overall_avg_Score", "type": "quantitative", "title": "Overall Average Score", "format": ".2f"},
+            {"field": "overall_avg_Popularity", "type": "quantitative", "title": "Overall Average Popularity", "format": ".2f"}
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "aggregate": [
+              {"op": "mean", "field": "Score", "as": "overall_avg_Score"},
+              {"op": "mean", "field": "Popularity", "as": "overall_avg_Popularity"}
+            ]
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "text": "Overall Average",
+          "align": "left",
+          "dx": 5,
+          "dy": -10,
+          "fontSize": 10,
+          "fontWeight":"bold",
+          "fontStyle": "italic",
+          "color": "black"
+        },
+        "encoding": {
+          "x": {"field": "overall_avg_Score", "type": "quantitative"},
+          "y": {"field": "overall_avg_Popularity", "type": "quantitative"}
+        }
+      }
+    ]
+  }
+  
+  

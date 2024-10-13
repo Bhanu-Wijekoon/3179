@@ -1,0 +1,61 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Scatter plot of anime where color represents rating and size represents members.",
+    "title": "Anime Ratings Plotted",
+    "width": 800,
+    "height": 600,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/anime.csv",
+      "format": {"type": "csv"}
+    },
+    "transform": [
+      {
+        "filter": "datum.Members > 0 && datum.Score > 0"
+      },
+      {
+        "calculate": "toNumber(datum.Members)",
+        "as": "Members"
+      },
+      {
+        "calculate": "toNumber(datum.Score)",
+        "as": "Score"
+      },
+      {
+        "calculate": "datum.Rating ? datum.Rating : 'Unknown'",
+        "as": "Rating"
+      }
+    ],
+    "mark": "circle",
+    "encoding": {
+      "x": {
+        "field": "Score",
+        "type": "quantitative",
+        "axis": {"title": "Score Average for Anime"},
+        "scale": {"zero": false}
+      },
+      "y": {
+        "field": "Members",
+        "type": "quantitative",
+        "axis": {"title": "Members for Anime"},
+        "scale": {"type": "log"}
+      },
+      "color": {
+        "field": "Rating",
+        "type": "nominal",
+        "legend": {"title": "Rating"}
+      },
+      "size": {
+        "field": "Members",
+        "type": "quantitative",
+        "scale": {"type": "sqrt", "range": [10, 1000]},
+        "legend": {"title": "Members for Anime"}
+      },
+      "tooltip": [
+        {"field": "Name", "type": "nominal"},
+        {"field": "Rating", "type": "nominal"},
+        {"field": "Score", "type": "quantitative"},
+        {"field": "Members", "type": "quantitative", "format": ","}
+      ]
+    }
+  }
+  
