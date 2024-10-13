@@ -2,211 +2,229 @@
 <html>
 
 <head>
-  <title>Insights into Anime and manga</title>
+  <title>Insights into Anime and Manga</title>
   <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
 
-  <!-- Import pure.css -->
+  <!-- Import Pure.css -->
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
     integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Google font -->
+  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
-  <!-- CSS file -->
+  <!-- CSS File -->
   <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
 
+  <style>
+    /* Additional CSS to adjust visualization containers */
+    .vis-container {
+      width: 100%;
+      max-width: 600px; /* Adjust the max-width as needed */
+      margin: 0 auto;
+    }
 
+    .description {
+      padding: 20px;
+    }
+
+    h1, h2 {
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    p {
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.6;
+    }
+
+    .small-font {
+      font-size: 0.8em;
+    }
+  </style>
 </head>
 
 <body>
 
   <div class="page">
 
-    <!-- pure grid group -->
+    <!-- Title and Introduction -->
     <div class="pure-g">
       <div class="pure-u-1-1">
-        <h1>Insights into Anime and manga</h1>
-        <p>Anime and manga have experienced significant global growth, 
-          becoming mainstream forms of entertainment beyond Japan. The 
-          proliferation of streaming services and digital platforms has 
-          made these mediums more accessible worldwide, leading to a 
+        <h1>Insights into Anime and Manga</h1>
+        <p>Anime and manga have experienced significant global growth,
+          becoming mainstream forms of entertainment beyond Japan. The
+          proliferation of streaming services and digital platforms has
+          made these mediums more accessible worldwide, leading to a
           diverse and expanding international fanbase.</p>
       </div>
     </div>
-    <!-- end pure grid group -->
 
-    <!-- pure grid group -->
+    <!-- Visualization 1 -->
     <div class="pure-g">
       <div class="pure-u-1-1">
         <div id="vis1" class="vis-container"></div>
       </div>
     </div>
-    <!-- end pure grid group -->
 
-    <!-- pure grid group -->
+    <!-- Visualization 4 and Description -->
     <div class="pure-g">
       <div class="pure-u-1-2">
-        <div class="description description-left">
-          <div id="vis4" class="vis-container"></div>
+        <div id="vis4" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description">
+          <h2>Ratings in Anime</h2>
+          <p>The rating system in anime categorizes content based on
+            its suitability for different audiences, considering factors
+            like violence, language, and mature themes. In the provided
+            scatter plot, anime titles are plotted with their average user
+            scores on the x-axis and the number of members (fans) on the
+            y-axis, which is scaled logarithmically. Each point's color
+            represents its rating category (such as G, PG, PG-13, R, etc.),
+            and the size indicates the popularity based on membership.
+
+            From the graph, we observe that anime across all rating
+            categories can achieve high average scores and amass large
+            fanbases. This suggests that while ratings guide viewers on
+            content appropriateness, they do not necessarily predict an
+            anime's popularity or quality. The diverse distribution
+            highlights that audiences appreciate a wide range of content,
+            and factors like storytelling, character development, and
+            animation quality significantly influence an anime's reception
+            regardless of its rating.</p>
         </div>
       </div>
-      <div class="pure-u-1-2">
-        <h2>Ratings in anime</h2>
-        <p>The rating system in anime categorizes content based on 
-          its suitability for different audiences, considering factors 
-          like violence, language, and mature themes. In the provided 
-          scatter plot, anime titles are plotted with their average user 
-          scores on the x-axis and the number of members (fans) on the 
-          y-axis, which is scaled logarithmically. Each point's color 
-          represents its rating category (such as G, PG, PG-13, R, etc.), 
-          and the size indicates the popularity based on membership.
-
-          From the graph, we observe that anime across all rating 
-          categories can achieve high average scores and amass large 
-          fanbases. This suggests that while ratings guide viewers on 
-          content appropriateness, they do not necessarily predict an 
-          anime's popularity or quality. The diverse distribution 
-          highlights that audiences appreciate a wide range of content, 
-          and factors like storytelling, character development, and 
-          animation quality significantly influence an anime's reception 
-          regardless of its rating.</p>
-      </div>
     </div>
-    <!-- end pure grid group -->
 
-    <!-- pure grid group -->
+    <!-- Visualization 3 and Description -->
     <div class="pure-g">
-      <div class="pure-u-1-2">
-        <h2>Completion and Dropping series</h2>
-        <p>The graph titled "Completed vs Dropped Shows by Genre" 
-          offers valuable insights into how anime viewers interact 
-          with different genres in terms of completion and drop 
-          rates. On the x-axis, various anime genres are listed, 
-          while the y-axis represents the number of users. For each 
-          genre, two key data points are plotted: the number of 
-          users who have completed shows (blue points) and those who 
-          have dropped shows (red points). A gray line connects these 
-          points for each genre, visually illustrating the disparity 
-          between completion and drop rates. Additionally, horizontal 
-          dashed lines indicate the average number of completions (blue) 
-          and drops (red) across all genres, serving as benchmarks for 
-          comparison.
+      <div class="pure-u-1-1">
+        <div class="description">
+          <h2>Completion and Dropping Series</h2>
+          <p>The graph titled "Completed vs Dropped Shows by Genre"
+            offers valuable insights into how anime viewers interact
+            with different genres in terms of completion and drop
+            rates. On the x-axis, various anime genres are listed,
+            while the y-axis represents the number of users. For each
+            genre, two key data points are plotted: the number of
+            users who have completed shows (blue points) and those who
+            have dropped shows (red points). A gray line connects these
+            points for each genre, visually illustrating the disparity
+            between completion and drop rates. Additionally, horizontal
+            dashed lines indicate the average number of completions (blue)
+            and drops (red) across all genres, serving as benchmarks for
+            comparison.
 
-          Analyzing the visualization, we observe that genres such as 
-          Action, Adventure, and Fantasy exhibit significantly higher 
-          completion rates compared to drop rates, with blue points well 
-          above the average completion line and red points far below the 
-          average drop line. This suggests that series within these genres 
-          are particularly engaging, sustaining viewer interest through to 
-          the end. The substantial gap between completed and dropped counts 
-          indicates strong viewer retention and satisfaction. In contrast, 
-          genres like Horror and Psychological show a narrower gap between 
-          completion and drop rates, with red points closer to or even 
-          exceeding the average drop line. This could imply that anime in 
-          these genres may not consistently meet viewer expectations or cater 
-          to a more niche audience, resulting in higher drop rates. Understanding 
-          these patterns is crucial for content creators and distributors, as it 
-          highlights the importance of genre-specific strategies to enhance 
-          viewer engagement and reduce drop-offs.</p>
-        
-      </div>
-      <div class="pure-u-1-2">
-        <div class="description description-right">
-          <div id="vis3" class="vis-container"></div>
+            Analyzing the visualization, we observe that genres such as
+            Action, Adventure, and Fantasy exhibit significantly higher
+            completion rates compared to drop rates, with blue points well
+            above the average completion line and red points far below the
+            average drop line. This suggests that series within these genres
+            are particularly engaging, sustaining viewer interest through to
+            the end. The substantial gap between completed and dropped counts
+            indicates strong viewer retention and satisfaction. In contrast,
+            genres like Horror and Psychological show a narrower gap between
+            completion and drop rates, with red points closer to or even
+            exceeding the average drop line. This could imply that anime in
+            these genres may not consistently meet viewer expectations or cater
+            to a more niche audience, resulting in higher drop rates. Understanding
+            these patterns is crucial for content creators and distributors, as it
+            highlights the importance of genre-specific strategies to enhance
+            viewer engagement and reduce drop-offs.</p>
         </div>
       </div>
-
     </div>
-    <!-- end pure grid group -->
+    <!-- Visualization 3 and Description -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div id="vis3" class="vis-container"></div>
+      </div>
+    </div>
 
-    <!-- pure grid group -->
+
+    <!-- Visualization 2 and Description -->
     <div class="pure-g">
       <div class="pure-u-1-2">
-        
         <div id="vis2" class="vis-container"></div>
       </div>
       <div class="pure-u-1-2">
-        <div class="description description-right">
-          <h2>Popularity of Genre's</h2>
-          <p>"Genre's by Popularity" provides a visual analysis 
-            of how different anime genres perform in terms of 
-            average user scores and popularity rankings within 
-            the community. On the x-axis, we have the average 
-            user score for each genre, reflecting the overall 
-            quality as rated by viewers, while the y-axis 
-            represents the average popularity rank, with lower 
-            numbers indicating higher popularity among fans. 
-            Each bubble in the scatter plot corresponds to a 
-            genre, where the size of the bubble indicates the 
-            number of anime titles within that genre—the larger 
-            the bubble, the more anime it contains. From the 
-            visualization, we observe that genres positioned 
-            towards the lower right quadrant, such as Action 
-            and Adventure, not only have higher average scores 
-            but also enjoy greater popularity, signifying a strong 
-            positive reception and widespread appeal. Conversely, 
-            genres located higher up or towards the left may have 
-            lower popularity or user scores, suggesting niche 
-            interest or potential areas for content improvement. 
-            The black cross marks the overall average score and 
-            popularity across all genres, serving as a benchmark 
-            to identify which genres perform above or below the 
-            median. This graph effectively highlights the correlation 
-            between genre prevalence, viewer satisfaction satisfaction, 
-            and popularity, offering valuable insights for creators and 
-            enthusiasts alike. 
+        <div class="description">
+          <h2>Popularity of Genres</h2>
+          <p>The graph titled "Genres by Popularity" provides a visual analysis
+            of how different anime genres perform in terms of
+            average user scores and popularity rankings within
+            the community. On the x-axis, we have the average
+            user score for each genre, reflecting the overall
+            quality as rated by viewers, while the y-axis
+            represents the average popularity rank, with lower
+            numbers indicating higher popularity among fans.
+            Each bubble in the scatter plot corresponds to a
+            genre, where the size of the bubble indicates the
+            number of anime titles within that genre—the larger
+            the bubble, the more anime it contains. From the
+            visualization, we observe that genres positioned
+            towards the lower right quadrant, such as Action
+            and Adventure, not only have higher average scores
+            but also enjoy greater popularity, signifying a strong
+            positive reception and widespread appeal. Conversely,
+            genres located higher up or towards the left may have
+            lower popularity or user scores, suggesting niche
+            interest or potential areas for content improvement.
+            The black cross marks the overall average score and
+            popularity across all genres, serving as a benchmark
+            to identify which genres perform above or below the
+            median. This graph effectively highlights the correlation
+            between genre prevalence, viewer satisfaction,
+            and popularity, offering valuable insights for creators and
+            enthusiasts alike.
           </p>
         </div>
       </div>
-
     </div>
-    <!-- end pure grid group -->
 
-    <!-- pure grid group -->
+    <!-- Visualization 5 and Description -->
     <div class="pure-g">
       <div class="pure-u-1-2">
-        <h2>Popularity of Genre's</h2>
-          <p> Whilst the big Three are not in any way
-            representative of all anime they do give basic
+        <div class="description">
+          <h2>The Big Three</h2>
+          <p>Whilst the Big Three are not in any way
+            representative of all anime, they do give basic
             guidelines to how most anime works and as such
-            give an overview.
-            
-            The big Three refers to the series One Piece, Naruto
-            and Bleach these series may be somewhat old now as all
+            provide an overview.
+
+            The Big Three refers to the series One Piece, Naruto,
+            and Bleach. These series may be somewhat old now as all
             are completed but are still the most popular animes for
-            most people. Thus the graph shows the average time per 
-            chapter each took through out their series and give an 
+            many people. Thus, the graph shows the average time per
+            chapter each took throughout their series and gives an
             overview of how animes are adapted.
           </p>
-      </div>
-      <div class="pure-u-1-2">
-        <div class="description description-right">
-          <div id="vis5" class="vis-container"></div>
         </div>
       </div>
-
-    </div>
-    <!-- end pure grid group -->
-
-    <div class="pure-g">
-      <div class="pure-u-1-1 small-font">
-        <p>This visualisation is created by <a href="https://fit3179.github.io/Vega-Lite/" target="_blank">FIT3179
-            Teaching Team</a>. The datasources are <a href="https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020" target=" _blank">
-              some data repository online</href>, <a href="https://www.kaggle.com/datasets/tarundalal/the-big-three-anime-arcs" target=" _blank">
-              some data repository online</href>, <a href="https://worldpopulationreview.com/country-rankings/anime-popularity-by-country" target=" _blank">
-                some data repository online</href>.</p>
+      <div class="pure-u-1-2">
+        <div id="vis5" class="vis-container"></div>
       </div>
     </div>
 
+    <!-- Footer -->
+    <div class="pure-g">
+      <div class="pure-u-1-1 small-font">
+        <p>This visualization is created by <a href="https://fit3179.github.io/Vega-Lite/" target="_blank">FIT3179
+            Teaching Team</a>. The data sources are <a href="https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020" target="_blank">
+            Anime Recommendation Database 2020</a>, <a href="https://www.kaggle.com/datasets/tarundalal/the-big-three-anime-arcs" target="_blank">
+            The Big Three Anime Arcs</a>, and <a href="https://worldpopulationreview.com/country-rankings/anime-popularity-by-country" target="_blank">
+            Anime Popularity by Country</a>.</p>
+      </div>
+    </div>
 
   </div> <!-- end page -->
 
+  <!-- Vega Embedding Scripts -->
   <script type="text/javascript">
     var specVis1 = "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/vega-map.json";
     var specVis2 = "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/vega-anime-graph.json";
@@ -214,24 +232,25 @@
     var specVis4 = "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/vega-packed-bubble.json";
     var specVis5 = "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/vega-big-three.json";
 
-    vegaEmbed('#vis1', specVis1, { "actions": false }).then(function (result) {
-      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    // Adjusted vegaEmbed calls with width and height options
+    vegaEmbed('#vis1', specVis1, { "actions": false, "width": 1400, "height": 400 }).then(function (result) {
+      // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis2', specVis2, { "actions": false }).then(function (result) {
-      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    vegaEmbed('#vis2', specVis2, { "actions": false, "width": 400, "height": 400 }).then(function (result) {
+      // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis3', specVis3, { "actions": false }).then(function (result) {
-      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    vegaEmbed('#vis3', specVis3, { "actions": false, "width": 1400, "height": 400 }).then(function (result) {
+      // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis4', specVis4, { "actions": false }).then(function (result) {
-      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    vegaEmbed('#vis4', specVis4, { "actions": false, "width": 400, "height": 400 }).then(function (result) {
+      // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis5', specVis5, { "actions": false }).then(function (result) {
-      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    vegaEmbed('#vis5', specVis5, { "actions": false, "width": 400, "height": 400 }).then(function (result) {
+      // Access the Vega view instance as result.view
     }).catch(console.error);
   </script>
 </body>
