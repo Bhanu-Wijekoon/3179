@@ -54,8 +54,8 @@
   ],
   "vconcat": [
     {
-      "width": "container",
-      "height": "container",
+      "width": "600",
+      "height": "800",
       "mark": {"type": "bar", "opacity": 0.7},
       "encoding": {
         "y": {
@@ -93,7 +93,7 @@
       }
     },
     {
-      "width": "container",
+      "width": "600",
       "height": 100,
       "params": [
         {
