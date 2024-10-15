@@ -56,7 +56,7 @@
               ]
             },
             "legend": {
-              "title": "Anime Popularity 2024",  
+              "title": "Anime Popularity Interest Score from worldpopulationreview.com",  
               "orient": "bottom",                
               "titleFontSize": 12,              
               "labelFontSize": 10             
@@ -64,8 +64,7 @@
           },
           "tooltip": [
             {"field": "country_normalized", "type": "nominal", "title": "Country"},
-            {"field": "AnimePopularityInterest2024_numeric", "type": "quantitative", "title": "Popularity 2024"},
-            {"field": "AnimePopularityInterest2023_numeric", "type": "quantitative", "title": "Popularity 2023"}
+            {"field": "AnimePopularityInterest2024_numeric", "type": "quantitative", "title": "Anime Popularity Interest Score"}
           ]
         }
       },
