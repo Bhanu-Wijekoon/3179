@@ -5,6 +5,25 @@
     "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/BigThree.csv",
     "format": {"type": "csv"}
   },
+  "config": {
+    "font": "Gill Sans",
+    "axis": {
+      "labelFontSize": 12,
+      "labelFontWeight": "bold",
+      "titleFontSize": 14,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "labelFontWeight": "normal",
+      "titleFontSize": 14,
+      "titleFontWeight": "bold"
+    },
+    "title": {
+      "fontSize": 20,
+      "fontWeight": 900
+    }
+  },
   "transform": [
     {"filter": "datum.BigThree == 'Bleach'"},
     {"filter": "datum['Arc'] != 'The Past Arc' && datum['Arc'] != 'The 1,000 Year Blood War Arc'"},
