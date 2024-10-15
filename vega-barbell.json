@@ -7,6 +7,25 @@
       "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/anime.csv",
       "format": {"type": "csv"}
     },
+    "config": {
+    "font": "Gill Sans",
+    "axis": {
+      "labelFontSize": 12,
+      "labelFontWeight": "bold",
+      "titleFontSize": 14,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "labelFontWeight": "normal",
+      "titleFontSize": 14,
+      "titleFontWeight": "bold"
+    },
+    "title": {
+      "fontSize": 20,
+      "fontWeight": 900
+    }
+  },
     "transform": [
       {
         "calculate": "split(datum.Genres, ', ')",
@@ -126,7 +145,11 @@
           "y": {
             "field": "AvgCompleted",
             "type": "quantitative"
-          }
+          },
+          "tooltip": [
+            {"field": "AvgCompleted", "type": "quantitative", "title": "Average Completed Users", "format": ".2f"}
+            
+          ]
         }
       },
       {
@@ -145,7 +168,11 @@
           "y": {
             "field": "AvgDropped",
             "type": "quantitative"
-          }
+          },
+          "tooltip": [
+            {"field": "AvgDropped", "type": "quantitative", "title": "Average Dropped Users", "format": ".2f"}
+            
+          ]
         }
       }
     ]
