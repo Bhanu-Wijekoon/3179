@@ -9,6 +9,25 @@
         "type": "csv"
       }
     },
+    "config": {
+      "font": "Gill Sans",
+      "axis": {
+        "labelFontSize": 12,
+        "labelFontWeight": "bold",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold"
+      },
+      "legend": {
+        "labelFontSize": 12,
+        "labelFontWeight": "normal",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold"
+      },
+      "title": {
+        "fontSize": 20,
+        "fontWeight": 900
+      }
+    },
     "params": [
       {
         "name": "GenreRankMax",
@@ -18,9 +37,10 @@
           "min": 1,
           "max": 50,
           "step": 1,
-          "name": "   No. of Genres: "
+          "name": "No. of Genres: "
         }
       }
+      
     ],
     "transform": [
       {
