@@ -4,13 +4,11 @@
   "autosize": {
     "type": "fit",
     "contains": "padding"
-  }
+  },
   "data": {
     "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/BigThree.csv",
     "format": {"type": "csv"}
   },
-  "width": "container",
-  "height": "container",
   "transform": [
     {"filter": "datum.BigThree == 'One Piece'"},
     {"calculate": "datum['Arc']", "as": "Arc"},
@@ -37,8 +35,8 @@
   ],
   "vconcat": [
     {
-      "width": 800,
-      "height": 600,
+      "width": "container",
+      "height": "container",
       "mark": {"type": "bar", "opacity": 0.7},
       "encoding": {
         "y": {
@@ -76,7 +74,7 @@
       }
     },
     {
-      "width": 800,
+      "width": "container",
       "height": 100,
       "params": [
         {
