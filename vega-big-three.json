@@ -7,6 +7,25 @@
       "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/BigThree.csv",
       "format": {"type": "csv"}
     },
+    "config": {
+      "font": "Gill Sans",
+      "axis": {
+        "labelFontSize": 12,
+        "labelFontWeight": "bold",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold"
+      },
+      "legend": {
+        "labelFontSize": 12,
+        "labelFontWeight": "normal",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold"
+      },
+      "title": {
+        "fontSize": 20,
+        "fontWeight": 900
+      }
+    },
     "transform": [
       {
         "calculate": "toNumber(datum['Start onChapter'])",
