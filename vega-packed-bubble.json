@@ -1,12 +1,30 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "description": "Scatter plot of anime where color represents rating and size represents members.",
-    "title": "Anime Ratings Plotted",
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json"
+    "title": "Anime Rating Bubble Graph",
     "width": 800,
     "height": 600,
     "data": {
       "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/anime.csv",
       "format": {"type": "csv"}
+    },
+    "config": {
+      "font": "Gill Sans",
+      "axis": {
+        "labelFontSize": 12,
+        "labelFontWeight": "bold",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold"
+      },
+      "legend": {
+        "labelFontSize": 12,
+        "labelFontWeight": "normal",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold"
+      },
+      "title": {
+        "fontSize": 20,
+        "fontWeight": 900
+      }
     },
     "transform": [
       {
@@ -23,6 +41,19 @@
       {
         "calculate": "datum.Rating ? datum.Rating : 'Unknown'",
         "as": "Rating"
+      },
+      {
+        "filter": {"param": "RatingSelection"}
+      }
+    ],
+    "params": [
+      {
+        "name": "RatingSelection",
+        "select": {
+          "type": "point",
+          "fields": ["Rating"]
+          
+        },"bind": "legend"
       }
     ],
     "mark": "circle",
@@ -30,18 +61,38 @@
       "x": {
         "field": "Score",
         "type": "quantitative",
-        "axis": {"title": "Score Average for Anime"},
+        "axis": {"title": "User Score Average for Anime Series"},
         "scale": {"zero": false}
       },
       "y": {
         "field": "Members",
         "type": "quantitative",
-        "axis": {"title": "Members for Anime"},
+        "axis": {"title": "Members in Anime Community"},
         "scale": {"type": "log"}
       },
       "color": {
         "field": "Rating",
         "type": "nominal",
+        "scale": {
+          "domain": [
+            "G - All Ages",
+            "PG - Children",
+            "PG-13 - Teens 13 or older",
+            "R - 17+ (violence & profanity)",
+            "R+ - Mild Nudity",
+            "Rx - Hentai",
+            "Unknown"
+          ],
+          "range": [
+            "#a7de83",
+            "#4b633b",
+            "#2c3b23",
+            "#e491a6",
+            "#96384f",
+            "#733b73",
+            "#808080"
+          ]
+        },
         "legend": {"title": "Rating"}
       },
       "size": {
@@ -52,9 +103,9 @@
       },
       "tooltip": [
         {"field": "Name", "type": "nominal"},
-        {"field": "Rating", "type": "nominal"},
-        {"field": "Score", "type": "quantitative"},
-        {"field": "Members", "type": "quantitative", "format": ","}
+        {"field": "Avg. Rating", "type": "nominal"},
+        {"field": "Avg. Score", "type": "quantitative"},
+        {"field": "Members in community", "type": "quantitative", "format": ","}
       ]
     }
   }
