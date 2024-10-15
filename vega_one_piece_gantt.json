@@ -36,7 +36,7 @@
   "vconcat": [
     {
       "width": "container",
-      "height": 800,
+      "height": 600,
       "mark": {"type": "bar", "opacity": 0.7},
       "encoding": {
         "y": {
