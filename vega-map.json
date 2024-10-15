@@ -3,8 +3,27 @@
     "title": "Anime Popularity Interest by Country",
     "width": 800,
     "height": 400,
-    "background": "#a4c8e0",  
+    "background": "#e5eef4",  
     "projection": {"type": "equalEarth"},
+    "config": {
+          "font": "Gill Sans",
+          "axis": {
+            "labelFontSize": 12,
+            "labelFontWeight": "bold",
+            "titleFontSize": 14,
+            "titleFontWeight": "bold"
+          },
+          "legend": {
+            "labelFontSize": 12,
+            "labelFontWeight": "normal",
+            "titleFontSize": 14,
+            "titleFontWeight": "bold"
+          },
+          "title": {
+            "fontSize": 20,
+            "fontWeight": 900
+          }
+        },
     "layer": [
       {
         "mark": {"type": "geoshape", "stroke": "#888", "strokeWidth": 0.5},  
@@ -51,16 +70,16 @@
               "type": "linear",
               "domain": [0, 100],  
               "range": [
-                      "#fff7bc",
-                      "#fee391",
-                      "#fec44f",
-                      "#fe9929",
-                      "#ec7014",
-                      "#cc4c02",
-                      "#993404",
-                      "#8c2d04",
-                      "#662506",
-                      "#4d1901"
+                      "#f7fbff",
+      "#deebf7",
+      "#c6dbef",
+      "#9ecae1",
+      "#6baed6",
+      "#4292c6",
+      "#2171b5",
+      "#08519c",
+      "#08306b",
+      "#041f5b"
               ]
             },
             "legend": {
