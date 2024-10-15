@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "One Piece Episodes vs. Chapters",
+  "title": "Bleach Episodes vs. Chapters",
   "data": {
     "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/BigThree.csv",
     "format": {"type": "csv"}
@@ -19,14 +19,15 @@
       "as": "EndEpisode"
     },
     {
-      "calculate": "[{'Type':'Episode','Start': datum.StartEpisode, 'End': datum.EndEpisode, 'Total': datum.TotalEpisodes}, {'Type':'Chapter','Start': datum.StartChapter, 'End': datum.EndChapter, 'Total': datum.TotalChapters}]",
+      "calculate": "[{'Type':'Episode', 'Medium':'Television', 'Start': datum.StartEpisode, 'End': datum.EndEpisode, 'Total': datum.TotalEpisodes}, {'Type':'Chapter', 'Medium':'Manga','Start': datum.StartChapter, 'End': datum.EndChapter, 'Total': datum.TotalChapters}]",
       "as": "ArcData"
     },
     {"flatten": ["ArcData"]},
     {"calculate": "datum.ArcData.Type", "as": "Type"},
     {"calculate": "datum.ArcData.Start", "as": "Start"},
     {"calculate": "datum.ArcData.End", "as": "End"},
-    {"calculate": "datum.ArcData.Total", "as": "Total"}
+    {"calculate": "datum.ArcData.Total", "as": "Total"},
+    {"calculate": "datum.ArcData.Medium", "as": "Medium"}
   ],
   "vconcat": [
     {
@@ -44,7 +45,7 @@
         "x": {
           "field": "Start",
           "type": "quantitative",
-          "title": "Number",
+          "title": "Chapter/Episode Number",
           "scale": {"domain": {"param": "brush"}, "domainMin": 0}, 
           "axis": {"grid": true, "domain": true, "tickCount": 10}
         },
@@ -60,11 +61,11 @@
           "legend": {"title": "Type"}
         },
         "tooltip": [
-          {"field": "Arc", "type": "nominal", "title": "Arc"},
-          {"field": "Type", "type": "nominal", "title": "Type"},
-          {"field": "Start", "type": "quantitative", "title": "Start Number"},
-          {"field": "End", "type": "quantitative", "title": "End Number"},
-          {"field": "Total", "type": "quantitative", "title": "Total"}
+          {"field": "Arc", "type": "nominal", "title": "Arc:"},
+          {"field": "Medium", "type": "nominal", "title": "Medium:"},
+          {"field": "Start", "type": "quantitative", "title": "Start:"},
+          {"field": "End", "type": "quantitative", "title": "End:"},
+          {"field": "Total", "type": "quantitative", "title": "Total Episodes/Chapters:"}
         ]
       }
     },
@@ -91,7 +92,7 @@
         "x": {
           "field": "Start",
           "type": "quantitative",
-          "title": "Number",
+          "title": "Chapter/Episode Number",
           "axis": {"grid": true, "domain": true, "tickCount": 10},
           "scale": {"domainMin": 0}
         },
