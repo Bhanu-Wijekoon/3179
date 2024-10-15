@@ -1,0 +1,114 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Bleach Episodes vs. Chapters",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/BigThree.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum.BigThree == 'Bleach'"},
+    {"filter": "datum['Arc'] != 'The Past Arc' && datum['Arc'] != 'The 1,000 Year Blood War Arc'"},
+    {"calculate": "datum['Arc']", "as": "Arc"},
+    {"calculate": "toNumber(datum['Start onChapter'])", "as": "StartChapter"},
+    {
+      "calculate": "toNumber(datum['Start onChapter']) + toNumber(datum['TotalChapters']) - 1",
+      "as": "EndChapter"
+    },
+    {"calculate": "toNumber(datum['Start onEpisode'])", "as": "StartEpisode"},
+    {
+      "calculate": "toNumber(datum['Start onEpisode']) + toNumber(datum['TotalEpisodes']) - 1",
+      "as": "EndEpisode"
+    },
+    {
+      "calculate": "[{'Type':'Episode', 'Medium':'Television', 'Start': datum.StartEpisode, 'End': datum.EndEpisode, 'Total': datum.TotalEpisodes}, {'Type':'Chapter', 'Medium':'Manga','Start': datum.StartChapter, 'End': datum.EndChapter, 'Total': datum.TotalChapters}]",
+      "as": "ArcData"
+    },
+    {"flatten": ["ArcData"]},
+    {"calculate": "datum.ArcData.Type", "as": "Type"},
+    {"calculate": "datum.ArcData.Start", "as": "Start"},
+    {"calculate": "datum.ArcData.End", "as": "End"},
+    {"calculate": "datum.ArcData.Total", "as": "Total"},
+    {"calculate": "datum.ArcData.Medium", "as": "Medium"}
+  ],
+  "vconcat": [
+    {
+      "width": 800,
+      "height": 600,
+      "mark": {"type": "bar", "opacity": 0.7},
+      "encoding": {
+        "y": {
+          "field": "Arc",
+          "type": "ordinal",
+          "sort": {"field": "StartEpisode", "op": "min", "order": "descending"},
+          "title": null,
+          "axis": {"labelLimit": 200}
+        },
+        "x": {
+          "field": "Start",
+          "type": "quantitative",
+          "title": "Chapter/Episode Number",
+          "scale": {"domain": {"param": "brush"}, "domainMin": 0}, 
+          "axis": {"grid": true, "domain": true, "tickCount": 10}
+        },
+        "x2": {"field": "End"},
+        "color": {
+          "field": "Type",
+          "type": "nominal",
+          "title": "Type",
+          "scale": {
+            "domain": ["Episode", "Chapter"],
+            "range": ["#3335ff", "#c6c6fb"]
+          },
+          "legend": {"title": "Type"}
+        },
+        "tooltip": [
+          {"field": "Arc", "type": "nominal", "title": "Arc:"},
+          {"field": "Medium", "type": "nominal", "title": "Medium:"},
+          {"field": "Start", "type": "quantitative", "title": "Start:"},
+          {"field": "End", "type": "quantitative", "title": "End:"},
+          {"field": "Total", "type": "quantitative", "title": "Total Episodes/Chapters:"}
+        ]
+      }
+    },
+    {
+      "width": 800,
+      "height": 100,
+      "params": [
+        {
+          "name": "brush",
+          "select": {
+            "type": "interval",
+            "encodings": ["x"]
+          }
+        }
+      ],
+      "mark": {"type": "bar", "opacity": 0.7},
+      "encoding": {
+        "y": {
+          "field": "Type",
+          "type": "nominal",
+          "title": null,
+          "axis": {"labels": false, "ticks": false}
+        },
+        "x": {
+          "field": "Start",
+          "type": "quantitative",
+          "title": "Chapter/Episode Number",
+          "axis": {"grid": true, "domain": true, "tickCount": 10},
+          "scale": {"domainMin": 0}
+        },
+        "x2": {"field": "End"},
+        "color": {
+          "field": "Type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Episode", "Chapter"],
+            "range": ["#8B0000", "#FFC0CB"],
+            "domainMin": 0
+          },
+          "legend": null
+        }
+      }
+    }
+  ]
+}
