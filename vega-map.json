@@ -56,7 +56,7 @@
               ]
             },
             "legend": {
-              "title": "Anime Popularity Interest Score",  
+              "title": "Popularity Interest Score",  
               "orient": "bottom",                
               "titleFontSize": 12,              
               "labelFontSize": 10             
