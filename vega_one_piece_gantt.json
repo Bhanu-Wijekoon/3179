@@ -1,10 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "One Piece Episodes vs. Chapters",
-  "autosize": {
-    "type": "fit",
-    "contains": "padding"
-  },
   "data": {
     "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/BigThree.csv",
     "format": {"type": "csv"}
@@ -54,8 +50,8 @@
   ],
   "vconcat": [
     {
-      "width": "600",
-      "height": "800",
+      "width": "800",
+      "height": "600",
       "mark": {"type": "bar", "opacity": 0.7},
       "encoding": {
         "y": {
@@ -93,7 +89,7 @@
       }
     },
     {
-      "width": "600",
+      "width": "800",
       "height": 100,
       "params": [
         {
