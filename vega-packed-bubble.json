@@ -62,13 +62,18 @@
         "field": "Score",
         "type": "quantitative",
         "axis": {"title": "User Score Average for Anime Series"},
-        "scale": {"zero": false}
+        "scale": {"zero": false, "domain": [1, 10]}
       },
       "y": {
         "field": "Members",
         "type": "quantitative",
         "axis": {"title": "Members in Anime Community"},
-        "scale": {"type": "log"}
+        "scale": {
+          "type": "log",
+          "domain": [1, 1500000],
+          "nice": true
+        }
+        
       },
       "color": {
         "field": "Rating",
