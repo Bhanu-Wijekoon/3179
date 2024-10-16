@@ -101,7 +101,8 @@
     <!-- Visualization 1 -->
     <div class="pure-g">
       <div class="pure-u-1-1">
-        <div id="vis1" class="vis-container"></div>
+        <div class="vis-container"><div id="vis1" class="vis-container"></div></div>
+        
       </div>
     </div>
 
@@ -196,7 +197,7 @@
     <!-- Visualization 3 and Description -->
     <div class="pure-g">
       <div class="pure-u-1-1">
-        <div id="vis3" class="vis-container"></div>
+        <div class="vis-container"><div id="vis3" class="vis-container"></div></div>
       </div>
     </div>
 
@@ -325,31 +326,31 @@
     var specVis7 = "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/refs/heads/main/vega_bleach_gantt.json";
 
     // Adjusted vegaEmbed calls with width and height options
-    vegaEmbed('#vis1', specVis1, { "actions": false, "width": 800, "height": 400 }).then(function (result) {
+    vegaEmbed('#vis1', specVis1, { "actions": false, "width": 1300, "height": 400 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis2', specVis2, { "actions": false, "width": 180, "height": 600 }).then(function (result) {
+    vegaEmbed('#vis2', specVis2, { "actions": false, "width": 360, "height": 400 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis3', specVis3, { "actions": false, "width": 700, "height": 400 }).then(function (result) {
+    vegaEmbed('#vis3', specVis3, { "actions": false, "width": 1300, "height": 400 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis4', specVis4, { "actions": false, "width": 155, "height": 700 }).then(function (result) {
+    vegaEmbed('#vis4', specVis4, { "actions": false, "width": 400, "height": 500 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis5', specVis5, { "actions": false, "width": 300, "height": 500 }).then(function (result) {
+    vegaEmbed('#vis5', specVis5, { "actions": false, "width": 500, "height": 400 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis6', specVis6, { "actions": false, "width": 180, "height": 600 }).then(function (result) {
+    vegaEmbed('#vis6', specVis6, { "actions": false, "width": 350, "height": 600 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis7', specVis7, { "actions": false, "width": 180, "height": 600 }).then(function (result) {
+    vegaEmbed('#vis7', specVis7, { "actions": false, "width": 350, "height": 600 }).then(function (result) {
       // Access the Vega view instance as result.view
     }).catch(console.error);
   </script>
