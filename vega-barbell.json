@@ -1,13 +1,13 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 800,
-    "height": 600,
-    "title": "Completed vs Dropped Shows by Genre",
-    "data": {
-      "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/anime.csv",
-      "format": {"type": "csv"}
-    },
-    "config": {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": "Completed vs Dropped Shows by Genre",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Bhanu-Wijekoon/3179/main/anime.csv",
+    "format": {"type": "csv"}
+  },
+  "config": {
     "font": "Gill Sans",
     "axis": {
       "labelFontSize": 12,
@@ -26,155 +26,166 @@
       "fontWeight": 900
     }
   },
-    "transform": [
-      {
-        "calculate": "split(datum.Genres, ', ')",
-        "as": "GenresArray"
-      },
-      {
-        "flatten": ["GenresArray"],
-        "as": ["Genre"]
-      },
-      {
-        "fold": ["Completed", "Watching", "On-Hold", "Dropped"],
-        "as": ["Status", "Count"]
-      },
-      {
-        "aggregate": [
-          {"op": "sum", "field": "Count", "as": "TotalCount"}
-        ],
-        "groupby": ["Genre", "Status"]
-      },
-      {
-        "pivot": "Status",
-        "value": "TotalCount",
-        "groupby": ["Genre"]
-      },
-      {
-        "calculate": "min(datum.Completed, datum.Dropped)",
-        "as": "CountMin"
-      },
-      {
-        "calculate": "max(datum.Completed, datum.Dropped)",
-        "as": "CountMax"
+  "transform": [
+    {
+      "calculate": "split(datum.Genres, ', ')",
+      "as": "GenresArray"
+    },
+    {
+      "flatten": ["GenresArray"],
+      "as": ["Genre"]
+    },
+    {
+      "fold": ["Completed", "Watching", "On-Hold", "Dropped"],
+      "as": ["Status", "Count"]
+    },
+    {
+      "aggregate": [
+        {"op": "sum", "field": "Count", "as": "TotalCount"},
+        {"op": "count", "as": "AnimeCount"}
+      ],
+      "groupby": ["Genre", "Status"]
+    },
+    {
+      "pivot": "Status",
+      "value": "TotalCount",
+      "groupby": ["Genre", "AnimeCount"]
+    },
+    {
+      "calculate": "datum.Completed / datum.AnimeCount",
+      "as": "CompletedNormalized"
+    },
+    {
+      "calculate": "datum.Dropped / datum.AnimeCount",
+      "as": "DroppedNormalized"
+    },
+    {
+      "calculate": "min(datum.CompletedNormalized, datum.DroppedNormalized)",
+      "as": "CountMin"
+    },
+    {
+      "calculate": "max(datum.CompletedNormalized, datum.DroppedNormalized)",
+      "as": "CountMax"
+    }
+  ],
+  "layer": [
+    {
+      "mark": "rule",
+      "encoding": {
+        "x": {
+          "field": "Genre",
+          "type": "nominal",
+          "axis": {"labelAngle": -45}
+        },
+        "y": {
+          "field": "CountMin",
+          "type": "quantitative",
+          "title": "Average Number of Users for Genre"
+        },
+        "y2": {"field": "CountMax"},
+        "color": {"value": "gray"},
+        "tooltip": [
+          {"field": "Genre", "type": "nominal"},
+          {"field": "CompletedNormalized", "type": "quantitative", "title": "Avg Completed for Genre", "format": ".2f"},
+          {"field": "DroppedNormalized", "type": "quantitative", "title": "Avg Dropped for Genre", "format": ".2f"},
+          {"field": "AnimeCount", "type": "quantitative", "title": "Number of Anime in Genre"}
+        ]
       }
-    ],
-    "layer": [
-      {
-        "mark": "rule",
-        "encoding": {
-          "x": {
-            "field": "Genre",
-            "type": "nominal",
-            "axis": {"labelAngle": -45}
+    },
+    {
+      "transform": [
+        {"calculate": "'Completed'", "as": "Status"}
+      ],
+      "mark": {"type": "point", "filled": true, "color": "blue"},
+      "encoding": {
+        "x": {"field": "Genre", "type": "nominal"},
+        "y": {"field": "CompletedNormalized", "type": "quantitative"},
+        "color": {
+          "field": "Status",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Completed", "Dropped"],
+            "range": ["blue", "red"]
           },
-          "y": {
-            "field": "CountMin",
+          "legend": {"title": "Status"}
+        },
+        "tooltip": [
+          {"field": "Genre", "type": "nominal"},
+          {"field": "Status", "type": "nominal", "title": "Status"},
+          {
+            "field": "CompletedNormalized",
             "type": "quantitative",
-            "title": "Number of Users"
+            "title": "Avg Completed",
+            "format": ".2f"
           },
-          "y2": {"field": "CountMax"},
-          "color": {"value": "gray"},
-          "tooltip": [
-            {"field": "Genre", "type": "nominal"},
-            {"field": "Completed", "type": "quantitative", "title": "Completed Users"},
-            {"field": "Dropped", "type": "quantitative", "title": "Dropped Users"}
-          ]
-        }
-      },
-      {
-        "transform": [
-          {"calculate": "'Completed'", "as": "Status"}
-        ],
-        "mark": {"type": "point", "filled": true, "color": "blue"},
-        "encoding": {
-          "x": {"field": "Genre", "type": "nominal"},
-          "y": {"field": "Completed", "type": "quantitative"},
-          "color": {
-            "field": "Status",
-            "type": "nominal",
-            "scale": {
-              "domain": ["Completed", "Dropped"],
-              "range": ["blue", "red"]
-            },
-            "legend": {"title": "Status"}
-          },
-          "tooltip": [
-            {"field": "Genre", "type": "nominal"},
-            {"field": "Status", "type": "nominal", "title": "Status"},
-            {
-              "field": "Completed",
-              "type": "quantitative",
-              "title": "Completed Users"
-            }
-          ]
-        }
-      },
-      {
-        "transform": [
-          {"calculate": "'Dropped'", "as": "Status"}
-        ],
-        "mark": {"type": "point", "filled": true, "color": "red"},
-        "encoding": {
-          "x": {"field": "Genre", "type": "nominal"},
-          "y": {"field": "Dropped", "type": "quantitative"},
-          "tooltip": [
-            {"field": "Genre", "type": "nominal"},
-            {"field": "Status", "type": "nominal", "title": "Status"},
-            {
-              "field": "Dropped",
-              "type": "quantitative",
-              "title": "Dropped Users"
-            }
-          ]
-        }
-      },
-      {
-        "transform": [
-          {
-            "aggregate": [{"op": "mean", "field": "Completed", "as": "AvgCompleted"}]
-          }
-        ],
-        "mark": {
-          "type": "rule",
-          "color": "blue",
-          "strokeWidth": 2,
-          "strokeDash": [4, 4]
-        },
-        "encoding": {
-          "y": {
-            "field": "AvgCompleted",
-            "type": "quantitative"
-          },
-          "tooltip": [
-            {"field": "AvgCompleted", "type": "quantitative", "title": "Average Completed Users", "format": ".2f"}
-            
-          ]
-        }
-      },
-      {
-        "transform": [
-          {
-            "aggregate": [{"op": "mean", "field": "Dropped", "as": "AvgDropped"}]
-          }
-        ],
-        "mark": {
-          "type": "rule",
-          "color": "red",
-          "strokeWidth": 2,
-          "strokeDash": [4, 4]
-        },
-        "encoding": {
-          "y": {
-            "field": "AvgDropped",
-            "type": "quantitative"
-          },
-          "tooltip": [
-            {"field": "AvgDropped", "type": "quantitative", "title": "Average Dropped Users", "format": ".2f"}
-            
-          ]
-        }
+          {"field": "AnimeCount", "type": "quantitative", "title": "Number of Anime in Genre"}
+        ]
       }
-    ]
-  }
-  
+    },
+    {
+      "transform": [
+        {"calculate": "'Dropped'", "as": "Status"}
+      ],
+      "mark": {"type": "point", "filled": true, "color": "red"},
+      "encoding": {
+        "x": {"field": "Genre", "type": "nominal"},
+        "y": {"field": "DroppedNormalized", "type": "quantitative"},
+        "tooltip": [
+          {"field": "Genre", "type": "nominal"},
+          {"field": "Status", "type": "nominal", "title": "Status"},
+          {
+            "field": "DroppedNormalized",
+            "type": "quantitative",
+            "title": "Avg Dropped",
+            "format": ".2f"
+          },
+          {"field": "AnimeCount", "type": "quantitative", "title": "Number of Anime in Genre"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [{"op": "mean", "field": "CompletedNormalized", "as": "AvgCompleted"}]
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "blue",
+        "strokeWidth": 2,
+        "strokeDash": [4, 4]
+      },
+      "encoding": {
+        "y": {
+          "field": "AvgCompleted",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {"field": "AvgCompleted", "type": "quantitative", "title": "Overall Avg Completed", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [{"op": "mean", "field": "DroppedNormalized", "as": "AvgDropped"}]
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "red",
+        "strokeWidth": 2,
+        "strokeDash": [4, 4]
+      },
+      "encoding": {
+        "y": {
+          "field": "AvgDropped",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {"field": "AvgDropped", "type": "quantitative", "title": "Overall Avg Dropped", "format": ".2f"}
+        ]
+      }
+    }
+  ]
+}
